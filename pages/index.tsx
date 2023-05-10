@@ -19,7 +19,7 @@ import { createInstantSearchRouterNext } from "react-instantsearch-hooks-router-
 import singletonRouter, { useRouter } from "next/router";
 import { Panel } from "../components/Panel";
 
-const client = algoliasearch("latency", "6be0576ff61c053d5f9a3225e2a90f76");
+const client = algoliasearch("2YYVBQESNN", "c2a5ba8bc1abfcd46ec7f06cd2811ee1");
 
 type HitProps = {
   hit: AlgoliaHit<{
@@ -31,8 +31,8 @@ type HitProps = {
 function Hit({ hit }: HitProps) {
   return (
     <>
-      <Highlight hit={hit} attribute="name" className="Hit-label" />
-      <span className="Hit-price">${hit.price}</span>
+      <Highlight hit={hit} attribute="fiche.nom" className="Hit-label" />
+      <span className="Hit-price">{hit.prix} €</span>
     </>
   );
 }
@@ -54,7 +54,7 @@ export default function HomePage({ serverState, url }: HomePageProps) {
 
       <InstantSearch
         searchClient={client}
-        indexName="instant_search"
+        indexName="dev_TempsL_TLFR"
         routing={{
           router: createInstantSearchRouterNext({
             serverUrl: url,
@@ -63,15 +63,16 @@ export default function HomePage({ serverState, url }: HomePageProps) {
         }}
         insights={true}
       >
-        <div className="Container">
-          <div>
+        <div className="Container" style={{ display: "flex" }}>
+          {/* <div>
             <DynamicWidgets fallbackComponent={FallbackComponent} />
-          </div>
-          <div>
+          </div> */}
+          <div style={{ marginBottom: "32px" }}>
             {/* router:{JSON.stringify(singletonRouter)} */}
             <SearchBox />
-            <Hits hitComponent={Hit} />
           </div>
+
+          <Hits hitComponent={Hit} />
         </div>
       </InstantSearch>
     </InstantSearchSSRProvider>
